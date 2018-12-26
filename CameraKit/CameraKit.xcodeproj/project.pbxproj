@@ -16,7 +16,9 @@
 		414B9B1D21D0C61F0095B04F /* PermissionsKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B1C21D0C61F0095B04F /* PermissionsKit.swift */; };
 		414B9B1F21D0C6E00095B04F /* AlertViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B1E21D0C6E00095B04F /* AlertViewManager.swift */; };
 		414B9B3F21D1C5B90095B04F /* CameraTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B3E21D1C5B90095B04F /* CameraTools.swift */; };
-		414B9B4121D1D56E0095B04F /* CameraFinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B4021D1D56E0095B04F /* CameraFinishViewController.swift */; };
+		414B9B4121D1D56E0095B04F /* CameraClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B4021D1D56E0095B04F /* CameraClipViewController.swift */; };
+		414B9B4321D2185F0095B04F /* CameraClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B4221D2185F0095B04F /* CameraClipView.swift */; };
+		414B9B4521D219880095B04F /* CameraClipCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414B9B4421D219880095B04F /* CameraClipCoverView.swift */; };
 		EF07C019384E0C2F4D8E09B2 /* Pods_CameraKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC309C7991E50F3C21B61600 /* Pods_CameraKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +34,9 @@
 		414B9B1C21D0C61F0095B04F /* PermissionsKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsKit.swift; sourceTree = "<group>"; };
 		414B9B1E21D0C6E00095B04F /* AlertViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewManager.swift; sourceTree = "<group>"; };
 		414B9B3E21D1C5B90095B04F /* CameraTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTools.swift; sourceTree = "<group>"; };
-		414B9B4021D1D56E0095B04F /* CameraFinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFinishViewController.swift; sourceTree = "<group>"; };
+		414B9B4021D1D56E0095B04F /* CameraClipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClipViewController.swift; sourceTree = "<group>"; };
+		414B9B4221D2185F0095B04F /* CameraClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClipView.swift; sourceTree = "<group>"; };
+		414B9B4421D219880095B04F /* CameraClipCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraClipCoverView.swift; sourceTree = "<group>"; };
 		B162E826BBA29B1CCEBA38C8 /* Pods-CameraKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CameraKit.release.xcconfig"; path = "Target Support Files/Pods-CameraKit/Pods-CameraKit.release.xcconfig"; sourceTree = "<group>"; };
 		BDF9C1C67E7CFCE54E9B5EB6 /* Pods-CameraKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CameraKit.debug.xcconfig"; path = "Target Support Files/Pods-CameraKit/Pods-CameraKit.debug.xcconfig"; sourceTree = "<group>"; };
 		CC309C7991E50F3C21B61600 /* Pods_CameraKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CameraKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,8 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				414B9B1A21D0C03C0095B04F /* CameraViewController.swift */,
+				414B9B4021D1D56E0095B04F /* CameraClipViewController.swift */,
+				414B9B4221D2185F0095B04F /* CameraClipView.swift */,
+				414B9B4421D219880095B04F /* CameraClipCoverView.swift */,
 				414B9B3E21D1C5B90095B04F /* CameraTools.swift */,
-				414B9B4021D1D56E0095B04F /* CameraFinishViewController.swift */,
 				414B9B1C21D0C61F0095B04F /* PermissionsKit.swift */,
 				414B9B1E21D0C6E00095B04F /* AlertViewManager.swift */,
 			);
@@ -234,9 +240,11 @@
 				414B9B0A21D0C0180095B04F /* ViewController.swift in Sources */,
 				414B9B3F21D1C5B90095B04F /* CameraTools.swift in Sources */,
 				414B9B0821D0C0180095B04F /* AppDelegate.swift in Sources */,
-				414B9B4121D1D56E0095B04F /* CameraFinishViewController.swift in Sources */,
+				414B9B4321D2185F0095B04F /* CameraClipView.swift in Sources */,
+				414B9B4121D1D56E0095B04F /* CameraClipViewController.swift in Sources */,
 				414B9B1F21D0C6E00095B04F /* AlertViewManager.swift in Sources */,
 				414B9B1B21D0C03C0095B04F /* CameraViewController.swift in Sources */,
+				414B9B4521D219880095B04F /* CameraClipCoverView.swift in Sources */,
 				414B9B1D21D0C61F0095B04F /* PermissionsKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,7 +20,6 @@ extension CameraViewController {
         { (notication) in
             let data = notication.object as? [String: AVCapturePhoto]
             finished(UIImage(data: data!["data"]!.fileDataRepresentation()!)!)
-
         }
         let vc = CameraViewController()
         return vc
@@ -42,13 +41,24 @@ class CameraViewController: UIViewController {
         return button
     }()
 
+    private var toggleLensBtn: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "ToggleLens_icon"), for: .normal)
+        button.addTarget(self, action: #selector(toggleLensAction), for: .touchUpInside)
+        return button
+    }()
+
     private var cameraView: UIView = {
         let view = UIView()
         return view
     }()
 
+    private var videoDevice: AVCaptureDevice!
+    private var videoInput: AVCaptureDeviceInput!
+
     private var session: AVCaptureSession = {
         let session = AVCaptureSession()
+        session.sessionPreset = .inputPriority
         return session
     }()
 
@@ -59,52 +69,77 @@ class CameraViewController: UIViewController {
 
     private var previewLayer: AVCaptureVideoPreviewLayer = {
         let previewLayer = AVCaptureVideoPreviewLayer()
+        previewLayer.videoGravity = .resizeAspectFill
+//        previewLayer.connection?.videoOrientation = .portrait
         return previewLayer
     }()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
 
-        session.startRunning()
-
-        session.beginConfiguration()
-
-        let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .back)
-
-        guard
-            let videoInput = try? AVCaptureDeviceInput(device: videoDevice!),
-            session.canAddInput(videoInput)
-            else {
-                fatalError("not video input")
-        }
-        session.addInput(videoInput)
-
-        if session.canAddOutput(photoOutput) {
-            session.addOutput(photoOutput)
-            session.sessionPreset = .inputPriority
-            session.commitConfiguration()
-        }
-
-        previewLayer.session = session
-        previewLayer.videoGravity = .resizeAspectFill
-        previewLayer.connection?.videoOrientation = .portrait
-        cameraView.layer.addSublayer(previewLayer)
-
         view.addSubview(cameraView)
         view.addSubview(closeBtn)
+        view.addSubview(toggleLensBtn)
         view.addSubview(bottomTools)
 
         bottomTools.cameraShutterBlock = { [weak self] in
             self?.snapPhoto()
         }
 
+        createCameraDistrict()
+
+    }
+
+    // MARK: 初始化 device
+    private func createCameraDistrict() {
+
+        videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                              for: .video,
+                                              position: .back)
+        videoInput = try? AVCaptureDeviceInput(device: videoDevice)
+        guard session.canAddInput(videoInput) else {
+                fatalError("not video input")
+        }
+        session.addInput(videoInput)
+
+        if session.canAddOutput(photoOutput) {
+            session.addOutput(photoOutput)
+            session.commitConfiguration()
+        }
+
+        previewLayer.session = session
+        cameraView.layer.addSublayer(previewLayer)
+        session.startRunning()
+
     }
 
     @objc private func closeAction() {
         dismiss(animated: true, completion: nil)
+    }
+
+    // MARK: 镜头切换
+    @objc private func toggleLensAction() {
+
+        session.stopRunning()
+
+        var position = videoInput.device.position
+        position = position == .front ? .back : .front
+
+        let newDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                                for: .video,
+                                                position: position)
+        let newInput = try? AVCaptureDeviceInput(device: newDevice!)
+
+        session.removeInput(videoInput)
+        session.addInput(newInput!)
+        session.commitConfiguration()
+
+        session.startRunning()
+
+        videoInput = newInput
+
     }
 
     override func viewWillLayoutSubviews() {
@@ -116,6 +151,11 @@ class CameraViewController: UIViewController {
             make.size.equalTo(CGSize(width: 40, height: 40))
             make.top.equalToSuperview().offset(SafeLayout.getSafeAreaTop())
             make.left.equalToSuperview().offset(10)
+        }
+        toggleLensBtn.snp.makeConstraints { (make) in
+            make.size.equalTo(CGSize(width: 40, height: 40))
+            make.centerY.equalTo(closeBtn)
+            make.right.equalToSuperview().inset(10)
         }
 
         cameraView.snp.makeConstraints { (make) in
@@ -161,7 +201,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         guard error == nil else { return }
 
-        let vc = CameraFinishViewController()
+        let vc = CameraClipViewController()
         vc.photo = photo
         vc.finishBlock = { self.closeAction() }
         vc.modalTransitionStyle = .flipHorizontal

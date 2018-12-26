@@ -1,5 +1,5 @@
 //
-//  CameraFinishViewController.swift
+//  CameraClipViewController.swift
 //  CameraKit
 //
 //  Created by PlutusCat on 2018/12/25.
@@ -10,23 +10,21 @@ import UIKit
 import SnapKit
 import AVFoundation
 
-class CameraFinishViewController: UIViewController {
+class CameraClipViewController: UIViewController {
 
     var photo: AVCapturePhoto!
     var finishBlock: (() -> ())!
 
     private var finishBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("使用图片", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "Complete_icon"), for: .normal)
         button.addTarget(self, action: #selector(finishAction), for: .touchUpInside)
         return button
     }()
 
     private var remakeBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("重拍", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "Remake_icon"), for: .normal)
         button.addTarget(self, action: #selector(remakeAction), for: .touchUpInside)
         return button
     }()
@@ -37,13 +35,21 @@ class CameraFinishViewController: UIViewController {
         return view
     }()
 
+    private var cameraClipView: CameraClipView = {
+        let clip = CameraClipView()
+        return clip
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
 
-        imageView.image = UIImage(data: photo.fileDataRepresentation()!)
-        view.addSubview(imageView)
+//        imageView.image = UIImage(data: photo.fileDataRepresentation()!)
+//        view.addSubview(imageView)
+
+        cameraClipView.image = UIImage(data: photo.fileDataRepresentation()!)
+        view.addSubview(cameraClipView)
 
         view.addSubview(finishBtn)
         view.addSubview(remakeBtn)
@@ -51,18 +57,22 @@ class CameraFinishViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        imageView.snp.makeConstraints { (make) in
+//        imageView.snp.makeConstraints { (make) in
+//            make.edges.equalToSuperview()
+//        }
+
+        cameraClipView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
 
         remakeBtn.snp.makeConstraints { (make) in
             make.left.equalTo(16)
-            make.size.equalTo(CGSize(width: 80, height: 40))
+            make.size.equalTo(CGSize(width: 40, height: 40))
             make.bottom.equalToSuperview().inset(SafeLayout.getSafeArea().bottom+20)
         }
         finishBtn.snp.makeConstraints { (make) in
             make.right.equalToSuperview().inset(16)
-            make.size.equalTo(CGSize(width: 100, height: 40))
+            make.size.equalTo(CGSize(width: 54, height: 40))
             make.centerY.equalTo(remakeBtn)
         }
     }
@@ -82,6 +92,6 @@ class CameraFinishViewController: UIViewController {
     }
 
     deinit {
-        print("*** CameraFinishViewController - deinit ***")
+        print("*** CameraClipViewController - deinit ***")
     }
 }
