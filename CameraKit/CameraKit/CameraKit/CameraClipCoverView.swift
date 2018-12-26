@@ -14,7 +14,7 @@ class CameraClipCoverView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        backgroundColor = UIColor.clear
 
     }
 
@@ -35,7 +35,7 @@ class CameraClipCoverView: UIView {
 //        ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
 //        ctx?.strokePath()
 
-        let context = UIGraphicsGetCurrentContext()
+//        let context = UIGraphicsGetCurrentContext()
 
     }
 

@@ -40,16 +40,24 @@ class CameraClipViewController: UIViewController {
         return clip
     }()
 
+    private var clipBackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
+        view.backgroundColor = .black
 
 //        imageView.image = UIImage(data: photo.fileDataRepresentation()!)
 //        view.addSubview(imageView)
 
+        view.addSubview(clipBackView)
+
         cameraClipView.image = UIImage(data: photo.fileDataRepresentation()!)
-        view.addSubview(cameraClipView)
+        clipBackView.addSubview(cameraClipView)
 
         view.addSubview(finishBtn)
         view.addSubview(remakeBtn)
@@ -60,16 +68,21 @@ class CameraClipViewController: UIViewController {
 //        imageView.snp.makeConstraints { (make) in
 //            make.edges.equalToSuperview()
 //        }
+        clipBackView.snp.makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(remakeBtn.snp.top)
+        }
 
         cameraClipView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(50)
         }
 
         remakeBtn.snp.makeConstraints { (make) in
             make.left.equalTo(16)
             make.size.equalTo(CGSize(width: 40, height: 40))
-            make.bottom.equalToSuperview().inset(SafeLayout.getSafeArea().bottom+20)
+            make.bottom.equalToSuperview().inset(SafeLayout.getSafeArea().bottom+10)
         }
+
         finishBtn.snp.makeConstraints { (make) in
             make.right.equalToSuperview().inset(16)
             make.size.equalTo(CGSize(width: 54, height: 40))
@@ -89,6 +102,10 @@ class CameraClipViewController: UIViewController {
 
     @objc private func remakeAction() {
         dismiss(animated: true, completion: nil)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     deinit {

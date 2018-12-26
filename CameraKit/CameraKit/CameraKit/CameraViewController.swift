@@ -77,6 +77,8 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+
         view.backgroundColor = .white
 
         view.addSubview(cameraView)
@@ -135,7 +137,6 @@ class CameraViewController: UIViewController {
         session.removeInput(videoInput)
         session.addInput(newInput!)
         session.commitConfiguration()
-
         session.startRunning()
 
         videoInput = newInput
@@ -167,13 +168,17 @@ class CameraViewController: UIViewController {
         }
     }
 
-    @objc func snapPhoto(){
+    @objc func snapPhoto() {
         let setting = AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])
         photoOutput.capturePhoto(with: setting, delegate: self)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     deinit {
